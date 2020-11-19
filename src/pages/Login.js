@@ -5,7 +5,7 @@ function Login() {
   const isDisabled = true;
   return (
     <div className="Login-body">
-      <form>
+      <form className="Login-form">
         <label>
           <input
             type="text"
