@@ -1,8 +1,7 @@
 import React from 'react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent } from '@testing-library/react';
 import renderWithRouter from './services/renderWithRouter';
 import App from '../App';
-import { fireEvent } from '@testing-library/react';
 
 describe('A tela de Login: ', () => {
   it('deve ter um input de email', () => {
