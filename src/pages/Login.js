@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import '../css/Login.css';
 
 function Login() {
@@ -19,8 +20,8 @@ function Login() {
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
     localStorage.setItem('user', JSON.stringify({ email }));
-
   };
+
   const validateLoginInfo = () => {
     const minPassChar = 6;
     const emailExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,14 +69,16 @@ function Login() {
             value={password}
           />
         </label>
-        <button
-          data-testid="login-submit-btn"
-          disabled={isDisabled}
-          onClick={onClick}
-          type="button"
-        >
-          Entrar
-        </button>
+        <Link to="/comidas">
+          <button
+            data-testid="login-submit-btn"
+            disabled={isDisabled}
+            onClick={onClick}
+            type="button"
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     </div>
   );
