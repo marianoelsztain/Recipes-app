@@ -1,0 +1,6 @@
+.Login-body {
+  border: 1px solid black;
+  display: flex;
+  height: 640px;
+  width: 360px;
+}
