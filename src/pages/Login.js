@@ -22,13 +22,11 @@ function Login() {
       && password.length !== 0
       && emailExp.test(email);
     if (validated) {
-      console.log('entrou');
       setLocalState({
         ...localState,
         isDisabled: false,
       });
     } else {
-      console.log('entrou no else');
       setLocalState({
         ...localState,
         isDisabled: true,
