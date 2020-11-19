@@ -15,6 +15,12 @@ function Login() {
       [name]: value,
     });
   };
+  const onClick = () => {
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify({ email }));
+
+  };
   const validateLoginInfo = () => {
     const minPassChar = 6;
     const emailExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,8 +70,9 @@ function Login() {
         </label>
         <button
           data-testid="login-submit-btn"
-          type="button"
           disabled={isDisabled}
+          onClick={onClick}
+          type="button"
         >
           Entrar
         </button>
