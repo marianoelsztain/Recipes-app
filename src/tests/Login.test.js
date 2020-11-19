@@ -37,4 +37,22 @@ describe('A tela de Login: ', () => {
     fireEvent.change(passwordInput, { target: { value: '123456' } });
     expect(loginButton).toBeDisabled();
   });
+
+  it('envia informação de login ao localStorage', () => {
+    const { getByRole, getByPlaceholderText } = renderWithRouter(<App />);
+    const loginButton = getByRole('button', { name: /entrar/i });
+    const emailInput = getByPlaceholderText('E-mail');
+    const passwordInput = getByPlaceholderText('Password');
+    fireEvent.change(emailInput, { target: { value: 'mariano@google.com' } });
+    fireEvent.change(passwordInput, { target: { value: '1234567' } });
+    fireEvent.click(loginButton);
+    const tokenMeals = localStorage.getItem('mealsToken');
+    const tokenCocktails = localStorage.getItem('cocktailsToken');
+    const user = JSON.parse(localStorage.getItem('user'));
+    const { email } = user;
+
+    expect(tokenMeals).toBe('1');
+    expect(tokenCocktails).toBe('1');
+    expect(email).toBe(emailInput.value);
+  });
 });
