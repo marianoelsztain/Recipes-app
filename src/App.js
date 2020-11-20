@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
+import Comidas from './pages/Comidas';
+import Bebidas from './pages/Bebidas';
 
 function App() {
   return (
@@ -16,8 +18,8 @@ function App() {
         <Route path="/bebidas/{id-da-receita}/" component={Login} />
         <Route path="/explorar/comidas/" component={Login} />
         <Route path="/explorar/bebidas/" component={Login} />
-        <Route path="/comidas" component={Login} />
-        <Route path="/bebidas" component={Login} />
+        <Route path="/comidas" component={Comidas} />
+        <Route path="/bebidas" component={Bebidas} />
         <Route path="/explorar" component={Login} />
         <Route path="/receitas-feitas" component={Login} />
         <Route path="/receitas-favoritas" component={Login} />
