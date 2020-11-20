@@ -55,4 +55,12 @@ describe('A tela de Login: ', () => {
     expect(tokenCocktails).toBe('1');
     expect(email).toBe(emailInput.value);
   });
+
+  it('botão "Entrar" redireciona para a pagina /comidas', () => {
+    const { getByRole, history } = renderWithRouter(<App />);
+    const loginButton = getByRole('button', { name: /entrar/i });
+    const foodRoute = '/comidas';
+    fireEvent.click(loginButton);
+    expect(history.location.pathname).toBe(foodRoute);
+  });
 });
