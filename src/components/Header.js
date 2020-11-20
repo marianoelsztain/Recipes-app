@@ -14,10 +14,10 @@ function Header({ pageTitle }) {
         <img
           alt="profile access"
           data-testid="profile-top-btn"
-          src={profileIcon}
+          src={ profileIcon }
         />
       </button>
-      <h1 data-testid="page-title">{pageTitle}</h1>
+      <h1 data-testid="page-title">{ pageTitle }</h1>
       <button
         className="header-btn"
         type="button"
@@ -25,7 +25,7 @@ function Header({ pageTitle }) {
         <img
           alt="search"
           data-testid="search-top-btn"
-          src={searchIcon}
+          src={ searchIcon }
         />
       </button>
     </header>

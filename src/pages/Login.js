@@ -23,10 +23,11 @@ function Login() {
   };
 
   const validateLoginInfo = () => {
+    const minLength = 0;
     const minPassChar = 6;
     const emailExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const validated = password.length > minPassChar
-      && password.length !== 0
+      && password.length !== minLength
       && emailExp.test(email);
     if (validated) {
       setLocalState({
@@ -47,33 +48,33 @@ function Login() {
   return (
     <div className="Login-body">
       <form className="Login-form">
-        <label>
+        <label htmlFor="email-input">
           <input
             data-testid="email-input"
             id="email-input"
             name="email"
-            onChange={onChange}
+            onChange={ onChange }
             placeholder="E-mail"
             type="text"
-            value={email}
+            value={ email }
           />
         </label>
-        <label>
+        <label htmlFor="password-input">
           <input
             data-testid="password-input"
             id="password-input"
             name="password"
-            onChange={onChange}
+            onChange={ onChange }
             placeholder="Password"
             type="password"
-            value={password}
+            value={ password }
           />
         </label>
         <Link to="/comidas">
           <button
             data-testid="login-submit-btn"
-            disabled={isDisabled}
-            onClick={onClick}
+            disabled={ isDisabled }
+            onClick={ onClick }
             type="button"
           >
             Entrar
