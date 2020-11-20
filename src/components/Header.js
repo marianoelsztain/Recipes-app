@@ -4,7 +4,23 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import '../css/Header.css';
 
-function Header({ pageTitle }) {
+function Header({ pageTitle, searchAbled }) {
+  const handleSearchIcon = () => {
+    if (searchAbled) {
+      const searchButton = (
+        <button className="header-btn" type="button">
+          <img
+            alt="search"
+            data-testid="search-top-btn"
+            src={ searchIcon }
+          />
+        </button>
+      );
+      return searchButton;
+    }
+    return null;
+  };
+
   return (
     <header>
       <button
@@ -18,16 +34,7 @@ function Header({ pageTitle }) {
         />
       </button>
       <h1 data-testid="page-title">{ pageTitle }</h1>
-      <button
-        className="header-btn"
-        type="button"
-      >
-        <img
-          alt="search"
-          data-testid="search-top-btn"
-          src={ searchIcon }
-        />
-      </button>
+      { handleSearchIcon() }
     </header>
   );
 }
@@ -36,4 +43,5 @@ export default Header;
 
 Header.propTypes = {
   pageTitle: PropTypes.string.isRequired,
+  searchAbled: PropTypes.bool.isRequired,
 };

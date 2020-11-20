@@ -1,29 +1,43 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
-import Login from './pages/Login';
-import Comidas from './pages/Comidas';
-import Bebidas from './pages/Bebidas';
+import {
+  Login,
+  Comidas,
+  Bebidas,
+  DetalhesComidas,
+  DetalhesBebidas,
+  Explorar,
+  ExplorarBebidas,
+  ExplorarComidas,
+  ExplorarOrigem,
+  ExplorarIngredientes,
+  ReceitasFeitas,
+  ReceitasFavoritas,
+  Perfil,
+  EmProgresso,
+
+} from './pages';
 
 function App() {
   return (
     <div>
       <Switch>
-        <Route path="/comidas/:id-da-receita/in-progress" component={ Login } />
-        <Route path="/bebidas/{id-da-receita}/in-progress" component={ Login } />
-        <Route path="/explorar/comidas/ingredientes" component={ Login } />
-        <Route path="/explorar/bebidas/ingredientes" component={ Login } />
-        <Route path="/explorar/comidas/area" component={ Login } />
-        <Route path="/comidas/{id-da-receita}/" component={ Login } />
-        <Route path="/bebidas/{id-da-receita}/" component={ Login } />
-        <Route path="/explorar/comidas/" component={ Login } />
-        <Route path="/explorar/bebidas/" component={ Login } />
+        <Route path="/comidas/:id/in-progress" component={ EmProgresso } />
+        <Route path="/bebidas/:id/in-progress" component={ EmProgresso } />
+        <Route path="/explorar/comidas/ingredientes" component={ ExplorarIngredientes } />
+        <Route path="/explorar/bebidas/ingredientes" component={ ExplorarIngredientes } />
+        <Route path="/explorar/comidas/area" component={ ExplorarOrigem } />
+        <Route path="/comidas/:id/" component={ DetalhesComidas } />
+        <Route path="/bebidas/:id/" component={ DetalhesBebidas } />
+        <Route path="/explorar/comidas/" component={ ExplorarComidas } />
+        <Route path="/explorar/bebidas/" component={ ExplorarBebidas } />
         <Route path="/comidas" component={ Comidas } />
         <Route path="/bebidas" component={ Bebidas } />
-        <Route path="/explorar" component={ Login } />
-        <Route path="/receitas-feitas" component={ Login } />
-        <Route path="/receitas-favoritas" component={ Login } />
-        <Route path="/perfil" component={ Login } />
+        <Route path="/explorar" component={ Explorar } />
+        <Route path="/receitas-feitas" component={ ReceitasFeitas } />
+        <Route path="/receitas-favoritas" component={ ReceitasFavoritas } />
+        <Route path="/perfil" component={ Perfil } />
         <Route path="/" component={ Login } />
       </Switch>
     </div>
