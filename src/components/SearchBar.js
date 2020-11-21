@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import RecipesContext from '../context/RecipesContext';
 import '../css/SearchBar.css';
 
 function SearchBar() {
+  const [inputText, setTextValue] = useState('');
+  const [inputRadio, setRadioValue] = useState('');
+
+  const onChange = (value) => {
+    setTextValue(value);
+  };
+
+  const onClick = (value) => {
+    setRadioValue(value);
+  };
+
   return (
     <div className="search-bar-container">
       <div className="search-input-container">
@@ -11,6 +23,8 @@ function SearchBar() {
             id="search-input"
             placeholder="Buscar Receita"
             type="text"
+            onChange={ ({ target }) => onChange(target.value) }
+            value={ inputText }
           />
         </label>
       </div>
@@ -24,6 +38,7 @@ function SearchBar() {
             id="ingredient-search-radio"
             name="filter-selector"
             type="radio"
+            onClick={ ({ target }) => onClick(target.value) }
             value="ingredient-filter"
           />
         </label>
@@ -37,6 +52,7 @@ function SearchBar() {
             id="name-search-radio"
             name="filter-selector"
             type="radio"
+            onClick={ ({ target }) => onClick(target.value) }
             value="name-filter"
           />
         </label>
@@ -50,6 +66,7 @@ function SearchBar() {
             id="first-letter-search-radio"
             name="filter-selector"
             type="radio"
+            onClick={ ({ target }) => onClick(target.value) }
             value="first-letter-filter"
           />
         </label>
