@@ -3,6 +3,10 @@ import RecipesContext from '../context/RecipesContext';
 import '../css/SearchBar.css';
 
 function SearchBar() {
+  const {
+    setSearchInput,
+  } = useContext(RecipesContext);
+
   const [inputText, setTextValue] = useState('');
   const [inputRadio, setRadioValue] = useState('');
 
@@ -12,6 +16,14 @@ function SearchBar() {
 
   const onClick = (value) => {
     setRadioValue(value);
+  };
+
+  const onSubmit = (textInput, radioInput) => {
+    setSearchInput({
+      filterType: radioInput,
+      query: textInput,
+      readyToSearch: true,
+    });
   };
 
   return (
@@ -74,6 +86,7 @@ function SearchBar() {
       <button
         data-testid="exec-search-btn"
         type="button"
+        onClick={ () => onSubmit(inputText, inputRadio) }
       >
         Pesquisar
       </button>

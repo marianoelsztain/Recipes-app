@@ -1,10 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
+import fetchFoodData from '../services/fetchFoodData';
+import fetchDrinkData from '../services/fetchDrinkData';
 
 function Provider({ children }) {
+  const [foodData, setFoodData] = useState([]);
+  const [drinkData, setDrinkData] = useState([]);
+  const [searchInput, setSearchInput] = useState({
+    filterType: '',
+    query: '',
+    readyToSearch: false,
+  });
+
+  const getFoodAPI = async (filterType, query) => {
+    if (filterType !== 'first-letter-filter' || query.length === 1) {
+      const result = await fetchFoodData(filterType, query);
+      if (result === null) {
+        return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
+      setFoodData(result);
+    } else {
+      alert('Sua busca deve conter somente 1 (um) caracter');
+    }
+  };
+
+  const getDrinkAPI = async (filterType, query) => {
+    if (filterType !== 'first-letter-filter' || query.length === 1) {
+      const result = await fetchDrinkData(filterType, query);
+      if (result === null) {
+        return alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
+      setDrinkData(result);
+    } else {
+      alert('Sua busca deve conter somente 1 (um) caracter');
+    }
+  };
+
   const value = {
-    teste: 'teste',
+    getFoodAPI,
+    getDrinkAPI,
+    drinkData,
+    foodData,
+    searchInput,
+    setSearchInput,
   };
 
   return (
