@@ -1,10 +1,14 @@
 import React from 'react';
 import Header from '../components/Header';
+import DrinkList from '../components/DrinkList';
 
 function Bebidas() {
   const enableSearch = true;
   return (
-    <Header pageTitle="Bebidas" searchAbled={ enableSearch } />
+    <div>
+      <Header pageTitle="Bebidas" searchAbled={ enableSearch } />
+      <DrinkList />
+    </div>
   );
 }
 
