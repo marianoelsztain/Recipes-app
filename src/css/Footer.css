@@ -3,11 +3,16 @@ footer {
   border-color: rgb(136, 111, 43);
   border-style: solid;
   border-width: 1px 0 0 0;
+  bottom: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  position: fixed;
+  right: 0;
+  width: 100%;
 }
 
 .footer-btn {
   background-color: transparent;
   border: none;
+  padding: 10px;
 }
