@@ -1,10 +1,14 @@
 import React from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Comidas() {
   const enableSearch = true;
   return (
-    <Header pageTitle="Comidas" searchAbled={ enableSearch } />
+    <div>
+      <Header pageTitle="Comidas" searchAbled={ enableSearch } />
+      <Footer />
+    </div>
   );
 }
 

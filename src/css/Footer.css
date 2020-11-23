@@ -1,0 +1,13 @@
+footer {
+  background-color: rgb(209, 174, 76);
+  border-color: rgb(136, 111, 43);
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.footer-btn {
+  background-color: transparent;
+  border: none;
+}
