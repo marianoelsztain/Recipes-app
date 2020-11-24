@@ -14,9 +14,11 @@ function Provider({ children }) {
     query: '',
     readyToSearch: false,
   });
-  const [foodCategories, setFoodCategories] = useState([]);
-  const [drinkCategories, setDrinkCategories] = useState([]);
-  const [filteredCategories, setFilteredCategories] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
+
+  const sliceStart = 0;
+  const sliceEnd = 5;
 
   const getFoodAPI = async (filterType, query) => {
     if (filterType !== 'first-letter-filter' || query.length === 1) {
@@ -42,24 +44,17 @@ function Provider({ children }) {
     }
   };
 
-  const handleFilters = (response) => {
-    const filtersArray = response.map((item) => item.strCategory)
-    setFilteredCategories(filtersArray.slice(0, 5));
-  }
-
   const getFoodCategories = async () => {
     const response = await fetchFoodCategories();
-    setFoodCategories(response);
-    handleFilters(response);
+    const filtersArray = response.map((item) => item.strCategory);
+    setFilteredCategories(filtersArray.slice(sliceStart, sliceEnd));
   };
 
   const getDrinkCategories = async () => {
     const response = await fetchDrinkCategories();
-    setDrinkCategories(response);
-    handleFilters(response);
+    const filtersArray = response.map((item) => item.strCategory);
+    setFilteredCategories(filtersArray.slice(sliceStart, sliceEnd));
   };
-  
-
 
   const value = {
     getFoodAPI,
@@ -71,6 +66,8 @@ function Provider({ children }) {
     getFoodCategories,
     getDrinkCategories,
     filteredCategories,
+    setFilteredData,
+    filteredData,
   };
 
   return (

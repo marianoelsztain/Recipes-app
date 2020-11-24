@@ -1,13 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import RecipesContext from '../context/RecipesContext';
 import '../css/Login.css';
 
 function Login() {
-  const {
-    getFoodCategories,
-  } = useContext(RecipesContext);
-
   const [localState, setLocalState] = useState({
     email: '',
     password: '',
@@ -46,6 +41,7 @@ function Login() {
       });
     }
   };
+
   useEffect(() => {
     validateLoginInfo();
   }, [email, password, isDisabled]);

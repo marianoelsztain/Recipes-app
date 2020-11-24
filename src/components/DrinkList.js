@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import DrinkCard from './DrinkCard';
+import DrinkFilterCategories from './DrinkFilterCategories';
 import '../css/Lists.css';
 
 function DrinkList() {
@@ -19,7 +20,7 @@ function DrinkList() {
 
   useEffect(() => {
     getDrinkAPI('name-filter', '');
-  }, [])
+  }, []);
 
   const handleDrinkData = () => {
     const maxSize = 12;
@@ -51,6 +52,7 @@ function DrinkList() {
 
   return (
     <section className="recipe-container">
+      <DrinkFilterCategories />
       { handleDrinkData() }
     </section>
   );

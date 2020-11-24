@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import FoodCard from './FoodCard';
-import FoodFilterCategories from '../components/FoodFIlterCategories';
+import FoodFilterCategories from './FoodFilterCategories';
 import '../css/Lists.css';
 
 function FoodList() {
@@ -10,8 +10,6 @@ function FoodList() {
     getFoodAPI,
     foodData,
     searchInput,
-    getFoodCategories,
-    filteredCategories,
   } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -22,8 +20,7 @@ function FoodList() {
 
   useEffect(() => {
     getFoodAPI('name-filter', '');
-    getFoodCategories();
-  }, [])
+  }, []);
 
   const handleFoodData = () => {
     const maxSize = 12;
@@ -55,7 +52,7 @@ function FoodList() {
 
   return (
     <section className="recipe-container">
-      <FoodFilterCategories categories={ filteredCategories } />
+      <FoodFilterCategories />
       { handleFoodData() }
     </section>
   );

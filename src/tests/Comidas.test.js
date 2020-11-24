@@ -4,11 +4,10 @@ import App from '../App';
 
 describe('A página de comidas: ', () => {
   it('deve ter um título "Comidas"', () => {
-    const { history, getByText } = renderWithRouter(<App />);
+    const { history } = renderWithRouter(<App />);
 
     history.push('/comidas');
     const foodsPath = history.location.pathname;
-    console.log(foodsPath)
 
     expect(foodsPath).toBe('/comidas');
 
