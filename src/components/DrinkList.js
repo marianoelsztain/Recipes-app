@@ -17,6 +17,10 @@ function DrinkList() {
     if (readyToSearch) getDrinkAPI(filterType, query);
   }, [searchInput]);
 
+  useEffect(() => {
+    getDrinkAPI('name-filter', '');
+  }, [])
+
   const handleDrinkData = () => {
     const maxSize = 12;
     const startIndex = 0;

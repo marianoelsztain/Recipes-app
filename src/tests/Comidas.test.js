@@ -1,14 +1,18 @@
 import React from 'react';
 import renderWithRouter from './services/renderWithRouter';
-import Comidas from '../pages/Comidas';
+import App from '../App';
 
 describe('A página de comidas: ', () => {
   it('deve ter um título "Comidas"', () => {
-    renderWithRouter(<Comidas />);
+    const { history, getByText } = renderWithRouter(<App />);
 
-    const mainTitleElement = document.querySelector('h1');
-    const mainTitle = 'Comidas';
-    expect(mainTitleElement).toBeInTheDocument();
-    expect(mainTitleElement.innerHTML).toBe(mainTitle);
+    history.push('/comidas');
+    const foodsPath = history.location.pathname;
+    console.log(foodsPath)
+
+    expect(foodsPath).toBe('/comidas');
+
+    // expect(mainTitleElement).toBeInTheDocument();
+    // expect(mainTitleElement.innerHTML).toBe(mainTitle);
   });
 });
