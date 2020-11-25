@@ -18,7 +18,7 @@ function DrinkFilterCategories({ categories }) {
   const onClick = (value) => {
     if (value === 'All' || activeFilter === value) {
       getDrinkAPI('name-filter', '');
-      setActiveFilter(value);
+      setActiveFilter('All');
     } else {
       getDrinkAPI('category-filter', value);
       setActiveFilter(value);
