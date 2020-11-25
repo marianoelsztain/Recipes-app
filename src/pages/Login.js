@@ -41,6 +41,7 @@ function Login() {
       });
     }
   };
+
   useEffect(() => {
     validateLoginInfo();
   }, [email, password, isDisabled]);

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 import fetchFoodData from '../services/fetchFoodData';
 import fetchDrinkData from '../services/fetchDrinkData';
+import fetchFoodCategories from '../services/fetchFoodCategories';
+import fetchDrinkCategories from '../services/fetchDrinkCategories';
 
 function Provider({ children }) {
   const [foodData, setFoodData] = useState([]);
@@ -12,6 +14,12 @@ function Provider({ children }) {
     query: '',
     readyToSearch: false,
   });
+  const [filteredCategories, setFilteredCategories] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
+  const [activeFilter, setActiveFilter] = useState('');
+
+  const sliceStart = 0;
+  const sliceEnd = 5;
 
   const getFoodAPI = async (filterType, query) => {
     if (filterType !== 'first-letter-filter' || query.length === 1) {
@@ -37,6 +45,18 @@ function Provider({ children }) {
     }
   };
 
+  const getFoodCategories = async () => {
+    const response = await fetchFoodCategories();
+    const filtersArray = response.map((item) => item.strCategory);
+    setFilteredCategories(filtersArray.slice(sliceStart, sliceEnd));
+  };
+
+  const getDrinkCategories = async () => {
+    const response = await fetchDrinkCategories();
+    const filtersArray = response.map((item) => item.strCategory);
+    setFilteredCategories(filtersArray.slice(sliceStart, sliceEnd));
+  };
+
   const value = {
     getFoodAPI,
     getDrinkAPI,
@@ -44,6 +64,13 @@ function Provider({ children }) {
     foodData,
     searchInput,
     setSearchInput,
+    getFoodCategories,
+    getDrinkCategories,
+    filteredCategories,
+    setFilteredData,
+    filteredData,
+    activeFilter,
+    setActiveFilter,
   };
 
   return (

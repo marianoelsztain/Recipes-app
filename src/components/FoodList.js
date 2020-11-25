@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import FoodCard from './FoodCard';
+import FoodFilterCategories from './FoodFilterCategories';
 import '../css/Lists.css';
 
 function FoodList() {
@@ -9,6 +10,7 @@ function FoodList() {
     getFoodAPI,
     foodData,
     searchInput,
+    activeFilter,
   } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -16,6 +18,10 @@ function FoodList() {
 
     if (readyToSearch) getFoodAPI(filterType, query);
   }, [searchInput]);
+
+  useEffect(() => {
+    getFoodAPI('name-filter', '');
+  }, []);
 
   const handleFoodData = () => {
     const maxSize = 12;
@@ -27,11 +33,12 @@ function FoodList() {
           index={ index }
           key={ `recipe${index}` }
           recipe={ item }
+          idMeal={ item.idMeal }
         />
       ));
     }
 
-    if (foodData.length === 1) {
+    if (foodData.length === 1 && activeFilter === '') {
       const { idMeal } = foodData[startIndex];
       return <Redirect to={ `/comidas/${idMeal}` } />;
     }
@@ -41,12 +48,14 @@ function FoodList() {
         index={ index }
         key={ `recipe${index}` }
         recipe={ item }
+        idMeal={ item.idMeal }
       />
     ));
   };
 
   return (
     <section className="recipe-container">
+      <FoodFilterCategories />
       { handleFoodData() }
     </section>
   );
