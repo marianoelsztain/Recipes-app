@@ -21,13 +21,14 @@ export default function exploreDetailsFood() {
           Por Local de Origem
         </button>
       </Link>
-
-      <button
-        type="button"
-        data-testid="explore-surprise"
-      >
-        Me Surpreenda!
-      </button>
+      <Link to="/explorar/comidas/area">
+        <button
+          type="button"
+          data-testid="explore-surprise"
+        >
+          Me Surpreenda!
+        </button>
+      </Link>
 
     </div>
   );
