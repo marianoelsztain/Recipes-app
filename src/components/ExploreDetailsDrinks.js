@@ -1,24 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function exploreDetailsFood() {
+function exploreDetailsDrinks() {
   return (
     <div>
-      <Link to="/explorar/comidas/ingredientes">
+      <Link to="/explorar/bebidas/ingredientes">
         <button
           type="button"
           data-testid="explore-by-ingredient"
         >
           Por Ingredientes
-        </button>
-      </Link>
-
-      <Link to="/explorar/comidas/area">
-        <button
-          type="button"
-          data-testid="explore-by-area"
-        >
-          Por Local de Origem
         </button>
       </Link>
 
@@ -32,3 +23,4 @@ export default function exploreDetailsFood() {
     </div>
   );
 }
+export default exploreDetailsDrinks;
