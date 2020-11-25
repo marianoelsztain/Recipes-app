@@ -18,7 +18,7 @@ function FoodFilterCategories({ categories }) {
   const onClick = (value) => {
     if (value === 'All' || activeFilter === value) {
       getFoodAPI('name-filter', '');
-      setActiveFilter(value);
+      setActiveFilter('All');
     } else {
       getFoodAPI('category-filter', value);
       setActiveFilter(value);
