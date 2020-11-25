@@ -16,6 +16,7 @@ function Provider({ children }) {
   });
   const [filteredCategories, setFilteredCategories] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
+  const [activeFilter, setActiveFilter] = useState('');
 
   const sliceStart = 0;
   const sliceEnd = 5;
@@ -68,6 +69,8 @@ function Provider({ children }) {
     filteredCategories,
     setFilteredData,
     filteredData,
+    activeFilter,
+    setActiveFilter,
   };
 
   return (

@@ -10,6 +10,7 @@ function DrinkList() {
     getDrinkAPI,
     drinkData,
     searchInput,
+    activeFilter,
   } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -32,11 +33,12 @@ function DrinkList() {
           index={ index }
           key={ `recipe${index}` }
           recipe={ item }
+          idDrink={ item.idDrink }
         />
       ));
     }
 
-    if (drinkData.length === 1) {
+    if (drinkData.length === 1 && activeFilter === '') {
       const { idDrink } = drinkData[startIndex];
       return <Redirect to={ `/bebidas/${idDrink}` } />;
     }
@@ -46,6 +48,7 @@ function DrinkList() {
         index={ index }
         key={ `recipe${index}` }
         recipe={ item }
+        idDrink={ item.idDrink }
       />
     ));
   };

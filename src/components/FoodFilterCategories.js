@@ -7,6 +7,8 @@ function FoodFilterCategories({ categories }) {
     filteredCategories,
     getFoodCategories,
     getFoodAPI,
+    setActiveFilter,
+    activeFilter,
   } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -14,10 +16,12 @@ function FoodFilterCategories({ categories }) {
   }, []);
 
   const onClick = (value) => {
-    if (value === 'All') {
+    if (value === 'All' || activeFilter === value) {
       getFoodAPI('name-filter', '');
+      setActiveFilter(value);
     } else {
       getFoodAPI('category-filter', value);
+      setActiveFilter(value);
     }
   };
 

@@ -7,6 +7,8 @@ function DrinkFilterCategories({ categories }) {
     filteredCategories,
     getDrinkCategories,
     getDrinkAPI,
+    setActiveFilter,
+    activeFilter,
   } = useContext(RecipesContext);
 
   useEffect(() => {
@@ -14,15 +16,14 @@ function DrinkFilterCategories({ categories }) {
   }, []);
 
   const onClick = (value) => {
-    if (value === 'All') {
+    if (value === 'All' || activeFilter === value) {
       getDrinkAPI('name-filter', '');
+      setActiveFilter(value);
     } else {
       getDrinkAPI('category-filter', value);
-      console.log(value)
+      setActiveFilter(value);
     }
   };
-
-  console.log(filteredCategories);
 
   return categories !== null && (
     <div>

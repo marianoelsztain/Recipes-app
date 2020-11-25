@@ -8,7 +8,7 @@ const fetchDrinkData = async (filterType, query) => {
   } else if (filterType === 'first-letter-filter') {
     endpoint = 'json/v1/1/search.php?f=';
   } else if (filterType === 'category-filter') {
-    endpoint = 'json/v1/1/list.php?c=';
+    endpoint = 'json/v1/1/filter.php?c=';
   }
 
   const response = await fetch(`${url}${endpoint}${query}`);
