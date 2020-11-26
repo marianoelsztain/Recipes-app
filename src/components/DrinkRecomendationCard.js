@@ -14,7 +14,7 @@ function DrinkCard({ recipe, testid, idDrink }) {
           <img
             src={ recipe.strDrinkThumb }
             alt="Receita"
-            data-testid={ `${testid}-card-img` }
+            data-testid={ `${testid}-card-img` };
           />
         </div>
         <div className="title-container">

@@ -1,21 +1,85 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import DrinkCard from './DrinkCard';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../css/Details.css';
 
 function FoodDetail({ index }) {
-  const { getFoodAPI, foodData } = useContext(RecipesContext);
+  const {
+    getFoodAPI,
+    foodData,
+    drinkData,
+    getDrinkAPI,
+  } = useContext(RecipesContext);
+  const currentRecipe = foodData[0];
+  const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]);
 
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
+
+  const handleRecomendations = () => {
+    const maxSize = 6;
+    const startIndex = 0;
+
+    if (drinkData.length > maxSize) {
+      return drinkData.slice(startIndex, maxSize).map((item, index) => (
+        <div
+          key={ `recomendation-${index}` }
+          data-testid={ `${index}-recomendation-card` }
+        >
+          <DrinkCard
+            testid={ index }
+            key={ `recipe${index}` }
+            recipe={ item }
+            idDrink={ item.idDrink }
+          />
+        </div>
+      ));
+    }
+  };
+
+  const handleIngredients = () => {
+    if (foodData.length === 1) {
+      const filteredKeys = Object.keys(currentRecipe);
+      const filteredMeasurements = [];
+
+      const filteredIngredients = [];
+      filteredKeys.forEach((key) => {
+        if (key.includes('strIngredient') && currentRecipe[`${key}`] !== '') {
+          filteredIngredients.push(currentRecipe[`${key}`]);
+        }
+      });
+      filteredKeys.forEach((key) => {
+        if (key.includes('strMeasure') && currentRecipe[`${key}`] !== ' ') {
+          filteredMeasurements.push(currentRecipe[`${key}`]);
+        }
+      });
+
+      setIngredients(filteredIngredients);
+      setMeasures(filteredMeasurements);
+      console.log(filteredIngredients);
+    }
+  };
+  console.log(ingredients, measures);
+
+  function sliceUrl(url) {
+    const videoId = url.split('=')[1];
+    console.log(videoId);
+    return videoId;
+  }
 
   useEffect(() => {
     getFoodAPI('id-filter', `${id}`);
+    getDrinkAPI('name-filter', '');
   }, []);
-  console.log(foodData);
+
+  useEffect(() => {
+    handleIngredients();
+  }, [foodData]);
 
   const handleDetails = () => {
     if (foodData.length === 1) {
@@ -25,7 +89,7 @@ function FoodDetail({ index }) {
         >
           <div className="detail-img-container">
             <img
-              src={ foodData[0].strMealThumb }
+              src={ currentRecipe.strMealThumb }
               alt="Receita"
               data-testid="recipe-photo"
             />
@@ -33,14 +97,12 @@ function FoodDetail({ index }) {
           <div className="detail-title-btn-container">
             <div className="detail-title-container">
 
-              <h3
-                data-testid="recipe-title"
-              >
-                { foodData[0].strMeal }
+              <h3 data-testid="recipe-title">
+                { currentRecipe.strMeal }
               </h3>
 
               <div className="detail-category-container">
-                <h3 data-testid="recipe-category">{ foodData[0].strCategory }</h3>
+                <h3 data-testid="recipe-category">{ currentRecipe.strCategory }</h3>
               </div>
 
             </div>
@@ -60,29 +122,50 @@ function FoodDetail({ index }) {
           </div>
 
           <div className="detail-ingredients-container">
-            <h3 data-testid={ `${index}-ingredient-name-and-measure` }>ingredients</h3>
+            <h3>Ingredients</h3>
+            <ul>
+              {ingredients.length && ingredients.map((ingredient, i) => (
+                <li
+                  data-testid={ `${i}-ingredient-name-and-measure` }
+                  key={ `ingredient-${i}` }
+                >
+                  {`${ingredient} - ${measures[i]}`}
+                </li>
+              ))}
+
+            </ul>
+
           </div>
+
           <div className="detail-instructions-container">
+            <h3>Instructions</h3>
             <p data-testid="instructions">
-              { foodData[0].strInstructions }
+              { currentRecipe.strInstructions }
             </p>
           </div>
-          <div className="detail-video-container">
-            <img
-              src={ foodData[0].strYoutube }
-              alt="Receita"
-              data-testid="recipe-photo"
+
+          <div className="video-container">
+            <iframe
+              data-testid="video"
+              title="video"
+              width="360"
+              height="315"
+              src={ `https://www.youtube.com/embed/${sliceUrl(currentRecipe.strYoutube)}` }
             />
           </div>
 
           <div className="detail-recomendation-container">
-            <img
-              src={ foodData[0].strYoutube }
-              alt="Receita"
-              data-testid={ `${index}-recomendation-card` }
-            />
+            {handleRecomendations()}
           </div>
-          <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+
+          <Link to={ `/comidas/${id}/in-progress` }>
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+            >
+              Start Recipe
+            </button>
+          </Link>
 
         </div>
       );

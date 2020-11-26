@@ -30,7 +30,7 @@ function DrinkList() {
     if (drinkData.length > maxSize) {
       return drinkData.slice(startIndex, maxSize).map((item, index) => (
         <DrinkCard
-          index={ index }
+          testid={ index }
           key={ `recipe${index}` }
           recipe={ item }
           idDrink={ item.idDrink }
