@@ -1,0 +1,31 @@
+.explore-drink-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.explore-food-container {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.link-explore {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+.btn-explore {
+  background-color:  rgb(226, 168, 8);
+  border-color: rgb(122, 93, 11);
+  border-radius: 6px;
+  border-width: .5px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  height: 50px;
+  text-align: center;
+  width: 95%;
+}
