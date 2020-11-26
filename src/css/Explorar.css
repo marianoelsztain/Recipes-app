@@ -11,6 +11,13 @@
   width: 100%;
 }
 
+.explore-page-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 100%;
+}
+
 .link-explore {
   display: flex;
   justify-content: center;
@@ -26,6 +33,19 @@
   font-size: 1.2rem;
   font-weight: 600;
   height: 50px;
+  text-align: center;
+  width: 95%;
+}
+
+.btn-explore-page {
+  background-color:  rgb(226, 168, 8);
+  border-color: rgb(122, 93, 11);
+  border-radius: 6px;
+  border-width: .5px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  height: 50px;
+  margin-bottom: 10px;
   text-align: center;
   width: 95%;
 }
