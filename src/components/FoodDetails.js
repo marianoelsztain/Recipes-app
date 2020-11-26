@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import DrinkCard from './DrinkCard';
@@ -7,7 +6,7 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../css/Details.css';
 
-function FoodDetail({ index }) {
+function FoodDetail() {
   const {
     getFoodAPI,
     foodData,
@@ -180,15 +179,3 @@ function FoodDetail({ index }) {
 }
 
 export default FoodDetail;
-
-FoodDetail.propTypes = {
-  recipe: PropTypes.shape({
-    strMeal: PropTypes.string,
-    strMealThumb: PropTypes.string,
-    strYoutube: PropTypes.string,
-    strInstructions: PropTypes.string,
-    strCategory: PropTypes.string,
-
-  }).isRequired,
-  index: PropTypes.number.isRequired,
-};
