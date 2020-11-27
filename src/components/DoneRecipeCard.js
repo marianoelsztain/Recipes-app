@@ -80,5 +80,4 @@ DoneRecipeCard.propTypes = {
     doneDate: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
-  index: PropTypes.number.isRequired,
 };
