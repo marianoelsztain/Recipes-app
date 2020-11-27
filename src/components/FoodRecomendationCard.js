@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import '../css/RecomendationCard.css';
 
-function DrinkCard({ recipe, testid, idDrink }) {
+function FoodCard({ recipe, testid, idMeal }) {
   return (
-    <Link to={ `/bebidas/${idDrink}` }>
+    <Link to={ `/comidas/${idMeal}` }>
       <div
         className="slide-card-container"
         data-testid={ `${testid}-recomendation-card` }
       >
         <div className="img-slide-container">
           <img
-            src={ recipe.strDrinkThumb }
+            src={ recipe.strMealThumb }
             alt="Receita"
             data-testid={ `${testid}-card-img` }
           />
@@ -25,7 +25,7 @@ function DrinkCard({ recipe, testid, idDrink }) {
           <h3
             data-testid={ `${testid}-card-name` }
           >
-            { recipe.strDrink }
+            { recipe.strMeal }
           </h3>
         </div>
 
@@ -34,13 +34,13 @@ function DrinkCard({ recipe, testid, idDrink }) {
   );
 }
 
-export default DrinkCard;
+export default FoodCard;
 
-DrinkCard.propTypes = {
+FoodCard.propTypes = {
   recipe: PropTypes.shape({
-    strDrink: PropTypes.string,
-    strDrinkThumb: PropTypes.string,
+    strMeal: PropTypes.string,
+    strMealThumb: PropTypes.string,
   }).isRequired,
   testid: PropTypes.number.isRequired,
-  idDrink: PropTypes.number.isRequired,
+  idMeal: PropTypes.number.isRequired,
 };

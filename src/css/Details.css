@@ -74,4 +74,10 @@
   border-top-color: black;
   border-top-width: 5px;
   border-top-style: solid;
+  margin: 0 0 50px 0;
+}
+.details-in-progress-btn{
+  position: fixed;
+  bottom: 0;
+  margin: 10px;
 }

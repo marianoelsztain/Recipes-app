@@ -16,6 +16,7 @@ function FoodDetail() {
   const currentRecipe = foodData[0];
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
+  const [recipeBtn, setRecipeBtn] = useState('Iniciar Receita');
 
   const { id } = useParams();
 
@@ -25,17 +26,14 @@ function FoodDetail() {
 
     if (drinkData.length > maxSize) {
       return drinkData.slice(startIndex, maxSize).map((item, index) => (
-        <div
-          key={ `recomendation-${index}` }
-          data-testid={ `${index}-recomendation-card` }
-        >
-          <DrinkRecomendationCard
-            testid={ index }
-            key={ `recipe${index}` }
-            recipe={ item }
-            idDrink={ item.idDrink }
-          />
-        </div>
+
+        <DrinkRecomendationCard
+          testid={ index }
+          key={ `recipe${index}` }
+          recipe={ item }
+          idDrink={ item.idDrink }
+        />
+
       ));
     }
   };
@@ -83,14 +81,26 @@ function FoodDetail() {
     }
   }
 
+  function HandleBtn(text) {
+    setRecipeBtn(text);
+  }
+
   useEffect(() => {
     getFoodAPI('id-filter', `${id}`);
     getDrinkAPI('name-filter', '');
+    const data = localStorage.getItem('button-state');
+    if (data) {
+      setRecipeBtn(JSON.parse(data));
+    }
   }, []);
 
   useEffect(() => {
     handleIngredients();
   }, [foodData]);
+
+  useEffect(() => {
+    localStorage.setItem('button-state', JSON.stringify(recipeBtn));
+  });
 
   const handleDetails = () => {
     if (foodData.length === 1) {
@@ -165,10 +175,12 @@ function FoodDetail() {
 
           <Link to={ `/comidas/${id}/in-progress` }>
             <button
+              className="details-in-progress-btn"
               type="button"
               data-testid="start-recipe-btn"
+              onClick={ () => HandleBtn('Continuar Receita') }
             >
-              Start Recipe
+              {recipeBtn}
             </button>
           </Link>
 
