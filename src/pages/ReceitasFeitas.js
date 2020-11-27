@@ -1,24 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import DoneRecipeCard from '../components/DoneRecipeCard';
 
 function ReceitasFeitas() {
-  const mockRecipe = {
-    id: 57522,
-    type: 'comida',
-    area: 'Argentina',
-    category: 'Main course',
-    alcoholicOrNot: '',
-    name: 'Asado',
-    image: '../images/profileIcon.svg',
-    doneDate: '20/12/2020',
-    tags: ['Grill', 'Meat', 'NonVegan', 'nothing'],
-  };
+  const [doneRecipesList, setDoneRecipesList] = useState([]);
+
+  useEffect(() => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    setDoneRecipesList(doneRecipes);
+  }, []);
 
   return (
     <div>
       <Header pageTitle="Receitas Feitas" searchAbled={ false } />
-      <DoneRecipeCard recipe={ mockRecipe } index={ 0 } />
+      { doneRecipesList && doneRecipesList.map((recipe, index) => (
+        <DoneRecipeCard key={ `${index}-recipe` } recipe={ recipe } index={ index } />
+      ))}
     </div>
   );
 }
