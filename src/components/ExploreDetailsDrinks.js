@@ -3,22 +3,32 @@ import { Link } from 'react-router-dom';
 
 function exploreDetailsDrinks() {
   return (
-    <div>
-      <Link to="/explorar/bebidas/ingredientes">
+    <div className="explore-page-container">
+      <Link
+        to="/explorar/bebidas/ingredientes"
+        className="link-explore"
+      >
         <button
-          type="button"
+          className="btn-explore-page"
           data-testid="explore-by-ingredient"
+          type="button"
         >
           Por Ingredientes
         </button>
       </Link>
 
-      <button
-        type="button"
-        data-testid="explore-surprise"
+      <Link
+        to="/explorar/bebidas/ingredientes"
+        className="link-explore"
       >
-        Me Surpreenda!
-      </button>
+        <button
+          className="btn-explore-page"
+          type="button"
+          data-testid="explore-surprise"
+        >
+          Me Surpreenda!
+        </button>
+      </Link>
 
     </div>
   );

@@ -3,31 +3,44 @@ import { Link } from 'react-router-dom';
 
 export default function exploreDetailsFood() {
   return (
-    <div>
-      <Link to="/explorar/comidas/ingredientes">
+    <div className="explore-page-container">
+      <Link
+        to="/explorar/comidas/ingredientes"
+        className="link-explore"
+      >
         <button
-          type="button"
           data-testid="explore-by-ingredient"
+          className="btn-explore-page"
+          type="button"
         >
           Por Ingredientes
         </button>
       </Link>
 
-      <Link to="/explorar/comidas/area">
+      <Link
+        to="/explorar/comidas/area"
+        className="link-explore"
+      >
         <button
-          type="button"
+          className="btn-explore-page"
           data-testid="explore-by-area"
+          type="button"
         >
           Por Local de Origem
         </button>
       </Link>
-
-      <button
-        type="button"
-        data-testid="explore-surprise"
+      <Link
+        to="/explorar/comidas/area"
+        className="link-explore"
       >
-        Me Surpreenda!
-      </button>
+        <button
+          className="btn-explore-page"
+          data-testid="explore-surprise"
+          type="button"
+        >
+          Me Surpreenda!
+        </button>
+      </Link>
 
     </div>
   );
