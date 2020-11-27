@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
-import DrinkCard from './DrinkCard';
+import DrinkRecomendationCard from './DrinkRecomendationCard';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../css/Details.css';
 
-function FoodDetail({ index }) {
+function FoodDetail() {
   const {
     getFoodAPI,
     foodData,
@@ -19,7 +18,6 @@ function FoodDetail({ index }) {
   const [measures, setMeasures] = useState([]);
 
   const { id } = useParams();
-  // console.log(id);
 
   const handleRecomendations = () => {
     const maxSize = 6;
@@ -31,7 +29,7 @@ function FoodDetail({ index }) {
           key={ `recomendation-${index}` }
           data-testid={ `${index}-recomendation-card` }
         >
-          <DrinkCard
+          <DrinkRecomendationCard
             testid={ index }
             key={ `recipe${index}` }
             recipe={ item }
@@ -49,27 +47,40 @@ function FoodDetail({ index }) {
 
       const filteredIngredients = [];
       filteredKeys.forEach((key) => {
-        if (key.includes('strIngredient') && currentRecipe[`${key}`] !== '') {
+        if (key.includes('strIngredient')
+        && (currentRecipe[`${key}`] !== ''
+        && currentRecipe[`${key}`] !== null)) {
           filteredIngredients.push(currentRecipe[`${key}`]);
         }
       });
       filteredKeys.forEach((key) => {
-        if (key.includes('strMeasure') && currentRecipe[`${key}`] !== ' ') {
+        if (key.includes('strMeasure')
+        && (currentRecipe[`${key}`] !== ' ' || currentRecipe[`${key}`] !== null)) {
           filteredMeasurements.push(currentRecipe[`${key}`]);
         }
       });
 
       setIngredients(filteredIngredients);
       setMeasures(filteredMeasurements);
-      console.log(filteredIngredients);
     }
   };
-  console.log(ingredients, measures);
 
-  function sliceUrl(url) {
-    const videoId = url.split('=')[1];
-    console.log(videoId);
-    return videoId;
+  function handleUrl(url) {
+    if (foodData.length === 1) {
+      if (url && url !== '' && url !== null) {
+        const videoId = url.split('=')[1];
+        return (
+          <iframe
+            data-testid="video"
+            title="video"
+            width="360"
+            height="315"
+            src={ `https://www.youtube.com/embed/${videoId}` }
+          />
+        );
+      }
+      return <span>No video for YOU!</span>;
+    }
   }
 
   useEffect(() => {
@@ -145,13 +156,7 @@ function FoodDetail({ index }) {
           </div>
 
           <div className="video-container">
-            <iframe
-              data-testid="video"
-              title="video"
-              width="360"
-              height="315"
-              src={ `https://www.youtube.com/embed/${sliceUrl(currentRecipe.strYoutube)}` }
-            />
+            {handleUrl(currentRecipe.strYoutube)}
           </div>
 
           <div className="detail-recomendation-container">
@@ -180,15 +185,3 @@ function FoodDetail({ index }) {
 }
 
 export default FoodDetail;
-
-FoodDetail.propTypes = {
-  recipe: PropTypes.shape({
-    strMeal: PropTypes.string,
-    strMealThumb: PropTypes.string,
-    strYoutube: PropTypes.string,
-    strInstructions: PropTypes.string,
-    strCategory: PropTypes.string,
-
-  }).isRequired,
-  index: PropTypes.number.isRequired,
-};

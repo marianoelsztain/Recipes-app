@@ -26,8 +26,8 @@
 }
 
 .btn-explore {
-  background-color:  rgb(226, 168, 8);
-  border-color: rgb(122, 93, 11);
+  background-color:rgb(202, 202, 202);
+  border-color: #232525;
   border-radius: 6px;
   border-width: .5px;
   font-size: 1.2rem;
@@ -38,8 +38,8 @@
 }
 
 .btn-explore-page {
-  background-color:  rgb(226, 168, 8);
-  border-color: rgb(122, 93, 11);
+  background-color:rgb(202, 202, 202);
+  border-color: #232525;
   border-radius: 6px;
   border-width: .5px;
   font-size: 1.2rem;

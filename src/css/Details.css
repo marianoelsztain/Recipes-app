@@ -38,12 +38,12 @@
 }
 
 .detail-category-container h3 {
-  color: rgb(78, 78, 78);
+  color: #232525;
   font-size: 1rem;
 }
 
 .detail-ingredients-container{
-  background-color: rgb(226, 168, 8);
+  background-color:rgb(202, 202, 202);
   border: 1px solid rgb(223, 223, 223);
   display: flex;
   justify-content: center;
@@ -64,4 +64,14 @@
   font-size: 1rem;
   text-align: justify;
   text-justify: inter-word;
+}
+
+.detail-recomendation-container {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: flex;
+  border-top-color: black;
+  border-top-width: 5px;
+  border-top-style: solid;
 }

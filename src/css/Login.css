@@ -48,7 +48,6 @@ input {
 }
 
 .btn-login {
-  background-color: #0fa36b;
   color: #232525;
   border-color: 0.5px solid rgb(146, 146, 146);
   border-radius: 6px;
@@ -58,4 +57,12 @@ input {
   padding: 5px;
   text-align: center;
   width: 50%;
+}
+
+.btn-login:disabled {
+  color: #232525;
+}
+
+.btn-login:enabled {
+  background-color: #0fa36b;
 }

@@ -19,23 +19,23 @@
 
 .Link:visited {
   text-decoration: none;
-  color: black;
+  color: #232525;
 }
 
 .Link:link {
   text-decoration: none;
-  color: black;
+  color: #232525;
 }
 
 .Link:active {
   text-decoration: none;
-  color: black;
+  color: #232525;
 }
 
 .card-container h3:hover {
   text-decoration: none;
   font-size: 1.1rem;
-  color: rgb(122, 93, 11);
+  color: #0fa36b;
 }
 
 .img-container img {
