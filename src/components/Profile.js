@@ -18,19 +18,32 @@ function Profile() {
   return (
     <div className="profile-container">
 
-      <h3>{ userEmail }</h3>
+      <h3 data-testid="profile-email">{ userEmail }</h3>
 
       <div className="profile-btn-container">
 
-        <Link to="/receitas-feitas" className="profile-btn">
+        <Link
+          to="/receitas-feitas"
+          className="profile-btn"
+          data-testid="profile-done-btn"
+        >
           Receitas Feitas
         </Link>
 
-        <Link to="/receitas-favoritas" className="profile-btn">
+        <Link
+          to="/receitas-favoritas"
+          className="profile-btn"
+          data-testid="profile-favorite-btn"
+        >
           Receitas Favoritas
         </Link>
 
-        <Link to="/" className="profile-btn" onClick={ () => onclick() }>
+        <Link
+          to="/"
+          className="profile-btn"
+          onClick={ () => onclick() }
+          data-testid="profile-logout-btn"
+        >
           Sair
         </Link>
 
