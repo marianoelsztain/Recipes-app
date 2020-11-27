@@ -30,7 +30,7 @@ function DoneRecipeCard(recipe, index) {
   const maxTag = 2;
   console.log(recipe);
   return (
-    <div className="done-recipe-card">
+    <div className="card-container">
       <div className="done-recipe-img-container">
         <Link to={ `/${type}s/${id}` }>
           <img
