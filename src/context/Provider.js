@@ -60,11 +60,19 @@ function Provider({ children }) {
     }
   };
 
-  const getDrinkCategories = async () => {
-    const sliceEnd = 5;
-    const response = await fetchDrinkCategories();
-    const filtersArray = response.map((item) => item.strCategory);
-    setFilteredList(filtersArray.slice(sliceStart, sliceEnd));
+  const getDrinkList = async (type) => {
+    const response = await fetchDrinkCategories(type);
+    if (type === 'category-list') {
+      const sliceEnd = 5;
+
+      const listArray = response.map((item) => item.strCategory);
+      setFilteredList(listArray.slice(sliceStart, sliceEnd));
+    } else if (type === 'ingredient-list') {
+      const sliceEnd = 12;
+
+      const listArray = response.map((item) => item.strIngredient1);
+      setFilteredList(listArray.slice(sliceStart, sliceEnd));
+    }
   };
 
   const value = {
@@ -74,7 +82,7 @@ function Provider({ children }) {
     foodData,
     searchInput,
     setSearchInput,
-    getDrinkCategories,
+    getDrinkList,
     getFoodList,
     filteredList,
     activeFilter,
