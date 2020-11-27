@@ -1,7 +1,23 @@
-.profile.btn-container {
+h3 {
+  text-align: center;
+}
+
+.profile-container {
+  align-items: center;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-direction: column;
+  height: 500px;
+  justify-content: center;
+  margin-top: 3px;
+  width: 100%;
+}
+
+.profile-btn-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  justify-content: center;
   margin-top: 3px;
   width: 100%;
 }
@@ -14,7 +30,22 @@
   font-size: 1.1rem;
   font-weight: 600;
   margin-top: 5px;
-  min-width: 47.5%;
+  width: 75%;
   padding: 3px;
   text-align: center;
+}
+
+.profile-btn:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.profile-btn:link {
+  text-decoration: none;
+  color: black;
+}
+
+.profile-btn:active {
+  text-decoration: none;
+  color: black;
 }
