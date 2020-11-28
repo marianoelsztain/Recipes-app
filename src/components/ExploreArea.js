@@ -1,8 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import RecipesContext from '../context/RecipesContext';
 import FoodCard from './FoodCard';
 
 function ExploreArea() {
+  const [selectedArea, setSelectedArea] = useState(null);
+
   const {
     getFoodAPI,
     foodData,
@@ -18,6 +20,20 @@ function ExploreArea() {
     getFoodList('area-list');
   }, []);
 
+  useEffect(() => {
+    if (selectedArea !== 'All' && selectedArea) {
+      getFoodAPI('area-filter', selectedArea);
+    }
+
+    if (selectedArea === 'All') {
+      getFoodAPI('name-filter', '');
+    }
+  }, [selectedArea]);
+
+  const onChange = (value) => {
+    setSelectedArea(value);
+  };
+
   const handleCards = () => {
     const maxSize = 12;
     const startIndex = 0;
@@ -32,15 +48,26 @@ function ExploreArea() {
         />
       ));
     }
+    return foodData.slice(startIndex, maxSize).map((item, index) => (
+      <FoodCard
+        index={ index }
+        key={ `recipe${index}` }
+        recipe={ item }
+        idMeal={ item.idMeal }
+      />
+    ));
   };
 
   const handleDropDown = () => {
     if (filteredList !== null) {
-      const optionsList = ['All', ...filteredList];
+      const optionsList = ['', 'All', ...filteredList];
 
       return (
         <div>
-          <select data-testid="explore-by-area-dropdown">
+          <select
+            onChange={ ({ target }) => onChange(target.value) }
+            data-testid="explore-by-area-dropdown"
+          >
             {optionsList.map((area) => (
               <option
                 data-testid={ `${area}-option` }
