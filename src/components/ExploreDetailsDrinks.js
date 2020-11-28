@@ -33,7 +33,6 @@ function ExploreDetailsDrinks() {
               Me Surpreenda!
             </button>
           </Link>
-
         </div>
       );
     }

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import FoodCard from './FoodCard';
 import FoodFilterCategories from './FoodFilterCategories';
-import '../css/Lists.css';
+import '../css/CardList.css';
 
 function FoodList() {
   const {

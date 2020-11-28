@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import tryLogo from '../images/logo-try.png';
+import foodLogo from '../images/logo-food.png';
 import '../css/Login.css';
 
 function Login() {
@@ -48,6 +50,10 @@ function Login() {
 
   return (
     <div className="Login-body">
+      <div className="Login-logo">
+        <img src={ tryLogo } alt="logo" className="try-logo" />
+        <img src={ foodLogo } alt="logo" className="food-logo" />
+      </div>
       <form className="Login-form">
         <label htmlFor="email-input">
           <input
@@ -71,9 +77,13 @@ function Login() {
             value={ password }
           />
         </label>
-        <Link to="/comidas">
+        <Link
+          to="/comidas"
+          className="link-food"
+        >
           <button
             data-testid="login-submit-btn"
+            className="btn-login"
             disabled={ isDisabled }
             onClick={ onClick }
             type="button"
