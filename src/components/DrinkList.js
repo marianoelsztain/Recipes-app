@@ -20,7 +20,10 @@ function DrinkList() {
   }, [searchInput]);
 
   useEffect(() => {
-    getDrinkAPI('name-filter', '');
+    const { readyToSearch } = searchInput;
+    if (!readyToSearch) {
+      getDrinkAPI('name-filter', '');
+    }
   }, []);
 
   const handleDrinkData = () => {
