@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 import fetchFoodData from '../services/fetchFoodData';
 import fetchDrinkData from '../services/fetchDrinkData';
-import fetchFoodCategories from '../services/fetchFoodCategories';
-import fetchDrinkCategories from '../services/fetchDrinkCategories';
+import fetchFoodList from '../services/fetchFoodList';
+import fetchDrinkList from '../services/fetchDrinkList';
 
 function Provider({ children }) {
   const [foodData, setFoodData] = useState([]);
@@ -44,24 +44,30 @@ function Provider({ children }) {
   };
 
   const getFoodList = async (type) => {
-    const response = await fetchFoodCategories(type);
+    const response = await fetchFoodList(type);
     let listArray = [];
 
     if (type === 'category-list') {
       const sliceEnd = 5;
 
       listArray = response.map((item) => item.strCategory);
+
       setFilteredList(listArray.slice(sliceStart, sliceEnd));
     } else if (type === 'ingredient-list') {
       const sliceEnd = 12;
 
       listArray = response.map((item) => item.strIngredient);
+
       setFilteredList(listArray.slice(sliceStart, sliceEnd));
+    } else if (type === 'area-list') {
+      listArray = response.map((item) => item.strArea);
+
+      setFilteredList(listArray);
     }
   };
 
   const getDrinkList = async (type) => {
-    const response = await fetchDrinkCategories(type);
+    const response = await fetchDrinkList(type);
     if (type === 'category-list') {
       const sliceEnd = 5;
 

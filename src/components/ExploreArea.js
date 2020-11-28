@@ -1,86 +1,65 @@
 import React, { useContext, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import FoodCard from './FoodCard';
 
 function ExploreArea() {
   const {
+    getFoodAPI,
+    foodData,
     getFoodList,
     filteredList,
-    getDrinkList,
-    setSearchInput,
   } = useContext(RecipesContext);
 
-  const { pathname } = useLocation();
-  
   useEffect(() => {
-    if (pathname && pathname.includes('comidas')) {
-      getFoodList('area-list');
-    } else {
-      getDrinkList('area-list');
-    }
-    
+    getFoodAPI('name-filter', '');
   }, []);
 
-  const handleImageUrl = () => {
-    let imgUrl;
-    if (pathname && pathname.includes('comidas')) {
-      imgUrl = 'https://www.themealdb.com/images/ingredients/';
-    } else {
-      imgUrl='https://www.thecocktaildb.com/images/ingredients/';
+  useEffect(() => {
+    getFoodList('area-list');
+  }, []);
+
+  const handleCards = () => {
+    const maxSize = 12;
+    const startIndex = 0;
+
+    if (foodData.length > maxSize) {
+      return foodData.slice(startIndex, maxSize).map((item, index) => (
+        <FoodCard
+          index={ index }
+          key={ `recipe${index}` }
+          recipe={ item }
+          idMeal={ item.idMeal }
+        />
+      ));
     }
-    return imgUrl;
-  }
-
-  const handleRedirectRoute = () => {
-    let pathUrl;
-    if (pathname && pathname.includes('comidas')) {
-      pathUrl = '/comidas';
-    } else {
-      pathUrl='/bebidas';
-    }
-    return pathUrl;
-  }
-  
-  const onClick = (value) => {
-    setSearchInput({
-      filterType: 'ingredient-filter',
-      query: value,
-      readyToSearch: true,
-    });
-  }
-
-  const handleIngredients = () => {
-    const extension = '.png';
-
-    return filteredList.map((ingredient, index) => (
-      <Link
-        to={ handleRedirectRoute() }
-        onClick={ () => onClick(ingredient) }
-      >
-        <div
-          data-testid={ `${index}-ingredient-card` }
-          key={ `ingredient-${index}` }
-        >
-          <h3 data-testid={ `${index}-card-name` }>
-            { ingredient }
-          </h3>
-    
-          <img
-            src={ `${handleImageUrl()}${ingredient}-Small${extension}` }
-            alt={ `${ingredient}` }
-            data-testid={ `${index}-card-img` }
-          />
-
-        </div>
-      </Link>
-    ));
   };
 
-  
+  const handleDropDown = () => {
+    if (filteredList !== null) {
+      const optionsList = ['All', ...filteredList];
+
+      return (
+        <div>
+          <select data-testid="explore-by-area-dropdown">
+            {optionsList.map((area) => (
+              <option
+                data-testid={ `${area}-option` }
+                key={ `area-${area}` }
+                value={ area }
+              >
+                { area }
+              </option>
+            ))}
+          </select>
+        </div>
+      );
+    }
+  };
 
   return (
-    <div>
-      { filteredList !== null ? handleIngredients() : <span>Loading</span> }
+    <div className="recipe-container">
+      { handleDropDown() }
+      { handleCards() }
     </div>
   );
 }
