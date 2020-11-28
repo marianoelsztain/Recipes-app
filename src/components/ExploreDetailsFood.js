@@ -34,7 +34,7 @@ function ExploreDetailsFood() {
             </button>
           </Link>
 
-          <Link to={ `/comidas/${foodData[0].idMeal}` } >
+          <Link to={ `/comidas/${foodData[0].idMeal}` }>
             <button
               type="button"
               data-testid="explore-surprise"
