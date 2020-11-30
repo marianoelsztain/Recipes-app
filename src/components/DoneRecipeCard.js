@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import '../css/Cards.css';
 
@@ -17,7 +18,15 @@ function DoneRecipeCard({ recipe, index }) {
     tags,
   } = recipe;
 
-  console.log(index);
+  const [showMessage, setShowMessage] = useState(false);
+
+  const CopiedLinkMessage = (
+    <div className="copy-message-hidden">
+      <span>
+        Link copiado!
+      </span>
+    </div>
+  );
 
   const preTitle = () => {
     if (type === 'bebida') {
@@ -26,9 +35,16 @@ function DoneRecipeCard({ recipe, index }) {
     return `${area} - ${category}`;
   };
 
+  const shareClick = () => {
+    const timeToShow = 1500;
+    copy(`http://localhost:3000/${type}s/${id}`);
+    setShowMessage(true);
+    setTimeout(() => setShowMessage(false), timeToShow);
+  };
+
   const minTag = 0;
   const maxTag = 2;
-  console.log(recipe);
+
   return (
     <div className="done-recipe-card-container">
       <div className="done-recipe-img-container">
@@ -40,6 +56,7 @@ function DoneRecipeCard({ recipe, index }) {
           />
         </Link>
       </div>
+      { showMessage && CopiedLinkMessage }
       <div className="done-recipe-info-container">
         <h3 data-testid={ `${index}-horizontal-top-text` }>{ preTitle() }</h3>
         <Link to={ `/${type}s/${id}` }>
@@ -56,11 +73,13 @@ function DoneRecipeCard({ recipe, index }) {
         )) }
       </div>
       <div>
-        <img
-          alt="share button"
-          data-testid={ `${index}-horizontal-share-btn` }
-          src={ shareIcon }
-        />
+        <button type="button" onClick={ shareClick }>
+          <img
+            alt="share button"
+            data-testid={ `${index}-horizontal-share-btn` }
+            src={ shareIcon }
+          />
+        </button>
       </div>
     </div>
   );

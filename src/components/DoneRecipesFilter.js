@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import RecipesContext from '../context/RecipesContext';
 import '../css/CategoryFilters.css';
 
 function DoneRecipesFilter({ currentList, setList, resetFilters }) {
@@ -8,7 +7,7 @@ function DoneRecipesFilter({ currentList, setList, resetFilters }) {
     const { value } = target;
     if (value === 'all') {
       resetFilters();
-    } else {
+    } else if (currentList) {
       const newList = currentList.filter((recipe) => recipe.type === value);
       setList(newList);
     }
