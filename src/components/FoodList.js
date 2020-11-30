@@ -20,7 +20,11 @@ function FoodList() {
   }, [searchInput]);
 
   useEffect(() => {
-    getFoodAPI('name-filter', '');
+    const { readyToSearch } = searchInput;
+
+    if (!readyToSearch) {
+      getFoodAPI('name-filter', '');
+    }
   }, []);
 
   const handleFoodData = () => {
