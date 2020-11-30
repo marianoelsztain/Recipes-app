@@ -4,20 +4,20 @@ import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 import '../css/Cards.css';
 
-function DoneRecipeCard(recipe, index) {
+function DoneRecipeCard({ recipe, index }) {
   const {
-    recipe: {
-      id,
-      type,
-      area,
-      category,
-      alcoholicOrNot,
-      name,
-      image,
-      doneDate,
-      tags,
-    },
+    id,
+    type,
+    area,
+    category,
+    alcoholicOrNot,
+    name,
+    image,
+    doneDate,
+    tags,
   } = recipe;
+
+  console.log(index);
 
   const preTitle = () => {
     if (type === 'bebida') {
@@ -80,4 +80,5 @@ DoneRecipeCard.propTypes = {
     doneDate: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
+  index: PropTypes.number.isRequired,
 };
