@@ -6,17 +6,22 @@ import '../css/Cards.css';
 
 function ReceitasFeitas() {
   const [doneRecipesList, setDoneRecipesList] = useState([]);
-
-  useEffect(() => {
+  const AllDoneRecipes = () => {
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     setDoneRecipesList(doneRecipes);
-    console.log(doneRecipes);
+  };
+  useEffect(() => {
+    AllDoneRecipes();
   }, []);
 
   return (
     <div className="done-recipes-body">
       <Header pageTitle="Receitas Feitas" searchAbled={ false } />
-      <DoneRecipesFilter />
+      <DoneRecipesFilter
+        currentList={ doneRecipesList }
+        setList={ setDoneRecipesList }
+        resetFilters={ AllDoneRecipes }
+      />
       { doneRecipesList && doneRecipesList.map((recipe, index) => (
         <DoneRecipeCard key={ `${index}-recipe` } recipe={ recipe } index={ index } />
       ))}
