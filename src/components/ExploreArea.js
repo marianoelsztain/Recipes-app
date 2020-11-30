@@ -63,7 +63,7 @@ function ExploreArea() {
       const optionsList = ['', 'All', ...filteredList];
 
       return (
-        <div>
+        <div className="options-container">
           <select
             onChange={ ({ target }) => onChange(target.value) }
             data-testid="explore-by-area-dropdown"
@@ -84,7 +84,7 @@ function ExploreArea() {
   };
 
   return (
-    <div className="recipe-container">
+    <div className="explore-ingredients-container">
       { handleDropDown() }
       { handleCards() }
     </div>

@@ -5,7 +5,10 @@ import '../css/RecomendationCard.css';
 
 function DrinkCard({ recipe, testid, idDrink }) {
   return (
-    <Link to={ `/bebidas/${idDrink}` }>
+    <Link
+      className="link-slide-card-container"
+      to={ `/bebidas/${idDrink}` }
+    >
       <div
         className="slide-card-container"
         data-testid={ `${testid}-recomendation-card` }

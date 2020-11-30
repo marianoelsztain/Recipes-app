@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import '../css/Explorar.css';
 
 function ExploreDetailsFood() {
   const {
@@ -15,29 +16,41 @@ function ExploreDetailsFood() {
   const handleRendering = () => {
     if (foodData.length) {
       return (
-        <div>
-          <Link to="/explorar/comidas/ingredientes">
+        <div className="explore-page-container">
+          <Link
+            className="link-explore"
+            to="/explorar/comidas/ingredientes"
+          >
             <button
-              type="button"
+              className="btn-explore-page"
               data-testid="explore-by-ingredient"
+              type="button"
             >
               Por Ingredientes
             </button>
           </Link>
 
-          <Link to="/explorar/comidas/area">
+          <Link
+            to="/explorar/comidas/area"
+            className="link-explore"
+          >
             <button
-              type="button"
+              className="btn-explore-page"
               data-testid="explore-by-area"
+              type="button"
             >
               Por Local de Origem
             </button>
           </Link>
 
-          <Link to={ `/comidas/${foodData[0].idMeal}` }>
+          <Link
+            className="link-explore"
+            to={ `/comidas/${foodData[0].idMeal}` }
+          >
             <button
-              type="button"
+              className="btn-explore-page"
               data-testid="explore-surprise"
+              type="button"
             >
               Me Surpreenda!
             </button>
