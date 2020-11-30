@@ -6,13 +6,22 @@ import '../css/CategoryFilters.css';
 function DoneRecipesFilter() {
   return (
     <div>
-      <button type="button">
+      <button
+        data-testid="filter-by-all-btn"
+        type="button"
+      >
         All
       </button>
-      <button type="button">
+      <button
+        data-testid="filter-by-food-btn"
+        type="button"
+      >
         Food
       </button>
-      <button type="button">
+      <button
+        data-testid="filter-by-drink-btn"
+        type="button"
+      >
         Drinks
       </button>
     </div>
