@@ -20,7 +20,7 @@ function FoodDetail() {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
-  // const [recipeBtn, setRecipeBtn] = useState('Iniciar Receita');
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const { id } = useParams();
 
@@ -55,6 +55,19 @@ function FoodDetail() {
   //     17222: ['vodka', 'mais vodka'],
   //   },
   // };
+
+  useEffect(() => {
+    getFoodAPI('id-filter', `${id}`);
+    getDrinkAPI('name-filter', '');
+  }, []);
+
+  useEffect(() => {
+    const favorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorite !== null) {
+      const alreadyFavorite = favorite.some(({ id: recipeId }) => recipeId === id);
+      setIsFavorite(alreadyFavorite);
+    }
+  }, [isFavorite]);
 
   const handleRecomendations = () => {
     const maxSize = 6;
@@ -99,6 +112,10 @@ function FoodDetail() {
     }
   };
 
+  useEffect(() => {
+    handleIngredients();
+  }, [foodData]);
+
   function handleUrl(url) {
     if (foodData.length === 1) {
       if (url && url !== '' && url !== null) {
@@ -141,17 +158,38 @@ function FoodDetail() {
     localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   };
 
-  const handleFavorite = () => {
-    const favorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    let isFavorite = false;
+  const addFavorite = () => {
+    const currentFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoriteData = {
+      id: currentRecipe.idMeal,
+      type: 'comida',
+      area: currentRecipe.strArea,
+      category: currentRecipe.strCategory,
+      alcoholicOrNot: '',
+      name: currentRecipe.strMeal,
+      image: currentRecipe.strMealThumb,
+    };
+    if (currentFavorite !== null) {
+      localStorage
+        .setItem('favoriteRecipes', JSON.stringify([...currentFavorite, favoriteData]));
 
-    if (favorite !== null) {
-      isFavorite = favorite.some(({ id: recipeId }) => recipeId === id);
+      setIsFavorite(true);
     }
+  };
 
+  const removeFavorite = () => {
+    const currentFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorite = currentFavorite.filter((item) => item.id !== id);
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorite));
+
+    setIsFavorite(false);
+  };
+
+  const handleFavoriteRender = () => {
     if (isFavorite) {
       return (
-        <button type="button">
+        <button type="button" onClick={ () => removeFavorite() }>
           <img
             alt="Set this recipe as favorite"
             data-testid="favorite-btn"
@@ -160,8 +198,9 @@ function FoodDetail() {
         </button>
       );
     }
+
     return (
-      <button type="button">
+      <button type="button" onClick={ () => addFavorite() }>
         <img
           alt="Set this recipe as favorite"
           data-testid="favorite-btn"
@@ -192,7 +231,7 @@ function FoodDetail() {
           <button
             type="button"
             className="details-in-progress-btn"
-            onClick={ toProgress }
+            onClick={ () => toProgress() }
             data-testid="start-recipe-btn"
           >
             { isInProgress ? 'Continuar Receita' : 'Iniciar Receita' }
@@ -201,19 +240,6 @@ function FoodDetail() {
       );
     }
   };
-
-  useEffect(() => {
-    getFoodAPI('id-filter', `${id}`);
-    getDrinkAPI('name-filter', '');
-    // const data = localStorage.getItem('button-state');
-    // if (data) {
-    //   setRecipeBtn(JSON.parse(data));
-    // }
-  }, []);
-
-  useEffect(() => {
-    handleIngredients();
-  }, [foodData]);
 
   const CopiedLinkMessage = (
     <div className="copy-message-hidden">
@@ -229,10 +255,6 @@ function FoodDetail() {
     setShowMessage(true);
     setTimeout(() => setShowMessage(false), timeToShow);
   };
-
-  // useEffect(() => {
-  //   localStorage.setItem('button-state', JSON.stringify(recipeBtn));
-  // });
 
   const handleDetails = () => {
     if (foodData.length === 1) {
@@ -269,7 +291,7 @@ function FoodDetail() {
                 />
               </button>
               { showMessage && CopiedLinkMessage }
-              { handleFavorite() }
+              { handleFavoriteRender() }
             </div>
           </div>
 

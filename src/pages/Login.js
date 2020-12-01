@@ -24,6 +24,8 @@ function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage
       .setItem('inProgressRecipes', JSON.stringify({ meals: {}, cocktails: {} }));
+    localStorage
+      .setItem('favoriteRecipes', JSON.stringify([]));
   };
 
   const validateLoginInfo = () => {
