@@ -39,5 +39,5 @@ DrinkCard.propTypes = {
     strDrinkThumb: PropTypes.string,
   }).isRequired,
   testid: PropTypes.number.isRequired,
-  idDrink: PropTypes.number.isRequired,
+  idDrink: PropTypes.string.isRequired,
 };

@@ -49,7 +49,6 @@ function FoodDetail() {
           recipe={ item }
           idDrink={ item.idDrink }
         />
-
       ));
     }
   };
@@ -170,14 +169,15 @@ function FoodDetail() {
         },
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+    } else {
+      const newStorage = {
+        ...currentStorage,
+        meals: {
+          [id]: [],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
     }
-    const newStorage = {
-      ...currentStorage,
-      meals: {
-        [id]: [],
-      },
-    };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   };
 
   const handleBtnRender = () => {

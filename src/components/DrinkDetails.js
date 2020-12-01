@@ -15,6 +15,7 @@ function DrinkDetail() {
     foodData,
     getFoodAPI,
   } = useContext(RecipesContext);
+
   const currentRecipe = drinkData[0];
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
@@ -93,7 +94,6 @@ function DrinkDetail() {
       name: currentRecipe.strDrink,
       image: currentRecipe.strDrinkThumb,
     };
-    console.log(favoriteData);
     if (currentFavorite !== null) {
       localStorage
         .setItem('favoriteRecipes', JSON.stringify([...currentFavorite, favoriteData]));
@@ -149,14 +149,15 @@ function DrinkDetail() {
         },
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+    } else {
+      const newStorage = {
+        ...currentStorage,
+        cocktails: {
+          [id]: [],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
     }
-    const newStorage = {
-      ...currentStorage,
-      cocktails: {
-        [id]: [],
-      },
-    };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   };
 
   const handleBtnRender = () => {
@@ -216,7 +217,6 @@ function DrinkDetail() {
               src={ currentRecipe.strDrinkThumb }
               alt="Receita"
               data-testid="recipe-photo"
-              tagName="IMG"
             />
           </div>
           <div className="detail-title-btn-container">
