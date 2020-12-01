@@ -112,26 +112,38 @@ function DrinkDetail() {
           </div>
 
           <div className="detail-ingredients-container">
-            <h3>Ingredients</h3>
-            <ul>
-              {ingredients.length && ingredients.map((ingredient, i) => (
-                <li
-                  data-testid={ `${i}-ingredient-name-and-measure` }
-                  key={ `ingredient-${i}` }
-                >
-                  {`${ingredient} - ${measures[i]}`}
-                </li>
-              ))}
+            <div className="datail-ingredients-title">
+              <h3>Ingredients</h3>
+            </div>
 
-            </ul>
+            <div className="datail-ingredients">
+              <ul>
+                {ingredients.length && ingredients.map((ingredient, i) => (
+                  <li
+                    data-testid={ `${i}-ingredient-name-and-measure` }
+                    key={ `ingredient-${i}` }
+                  >
+                    <span>{ingredient}</span>
+                    <span>{measures[i]}</span>
+                  </li>
+                ))}
+
+              </ul>
+            </div>
 
           </div>
 
           <div className="detail-instructions-container">
-            <h3>Instructions</h3>
-            <p data-testid="instructions">
-              { currentRecipe.strInstructions }
-            </p>
+            <div className="datail-instructions-title">
+              <h3>Instructions</h3>
+            </div>
+
+            <div className="datail-instructions">
+              <p data-testid="instructions">
+                { currentRecipe.strInstructions }
+              </p>
+            </div>
+
           </div>
 
           <div className="detail-recomendation-container">

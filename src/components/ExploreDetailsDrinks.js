@@ -15,20 +15,28 @@ function ExploreDetailsDrinks() {
   const handleRendering = () => {
     if (drinkData.length) {
       return (
-        <div>
-          <Link to="/explorar/bebidas/ingredientes">
+        <div className="explore-page-container">
+          <Link
+            className="link-explore"
+            to="/explorar/bebidas/ingredientes"
+          >
             <button
-              type="button"
+              className="btn-explore-page"
               data-testid="explore-by-ingredient"
+              type="button"
             >
               Por Ingredientes
             </button>
           </Link>
 
-          <Link to={ `/bebidas/${drinkData[0].idDrink}` }>
+          <Link
+            className="link-explore"
+            to={ `/bebidas/${drinkData[0].idDrink}` }
+          >
             <button
-              type="button"
+              className="btn-explore-page"
               data-testid="explore-surprise"
+              type="button"
             >
               Me Surpreenda!
             </button>

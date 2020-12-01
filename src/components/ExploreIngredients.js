@@ -53,23 +53,32 @@ function ExploreIngredients() {
 
     return filteredList.map((ingredient, index) => (
       <Link
+        className="explore-ingredients-link"
         key={ `ingredient-${index}` }
         to={ handleRedirectRoute() }
         onClick={ () => onClick(ingredient) }
       >
         <div
           data-testid={ `${index}-ingredient-card` }
+          className="explore-igredients-card"
           key={ `ingredient-${index}` }
         >
-          <h3 data-testid={ `${index}-card-name` }>
-            { ingredient }
-          </h3>
+          <div className="img-container">
+            <img
+              alt={ `${ingredient}` }
+              data-testid={ `${index}-card-img` }
+              src={ `${handleImageUrl()}${ingredient}-Small${extension}` }
+            />
+          </div>
 
-          <img
-            src={ `${handleImageUrl()}${ingredient}-Small${extension}` }
-            alt={ `${ingredient}` }
-            data-testid={ `${index}-card-img` }
-          />
+          <div>
+            <h3
+              className="title-container"
+              data-testid={ `${index}-card-name` }
+            >
+              { ingredient }
+            </h3>
+          </div>
 
         </div>
       </Link>
@@ -77,7 +86,7 @@ function ExploreIngredients() {
   };
 
   return (
-    <div>
+    <div className="explore-ingredients-container">
       { filteredList !== null ? handleIngredients() : <span>Loading</span> }
     </div>
   );
