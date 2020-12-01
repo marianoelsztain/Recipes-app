@@ -6,7 +6,6 @@ import DrinkRecomendationCard from './DrinkRecomendationCard';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-
 import '../css/Details.css';
 
 function FoodDetail() {
@@ -23,38 +22,6 @@ function FoodDetail() {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const { id } = useParams();
-
-  // const mockDoneRecipes = [{
-  //   id: '693254',
-  //   type: 'comida',
-  //   area: '',
-  //   category: 'side',
-  //   alcoholicOrNot: '',
-  //   name: 'nome-da-receita',
-  //   image: 'imagem-da-receita',
-  //   doneDate: 'quando-a-receita-foi-concluida',
-  //   tags: ['hola', 'como', 'estas'],
-  // },
-  // {
-  //   id: '86987',
-  //   type: 'bebida',
-  //   area: '',
-  //   category: 'categoria-da-receita-ou-texto-vazio',
-  //   alcoholicOrNot: 'alcoholic-ou-non-alcoholic-ou-texto-vazio',
-  //   name: 'nome-da-receita',
-  //   image: 'imagem-da-receita',
-  //   doneDate: 'quando-a-receita-foi-concluida',
-  //   tags: ['4 romanos', 'e', '1 ingles'],
-  // }];
-
-  // const mockInProgress = {
-  //   meals: {
-  //     52978: ['lentilha', 'noz-moscada'],
-  //   },
-  //   cocktails: {
-  //     17222: ['vodka', 'mais vodka'],
-  //   },
-  // };
 
   useEffect(() => {
     getFoodAPI('id-filter', `${id}`);
@@ -91,8 +58,8 @@ function FoodDetail() {
     if (foodData.length === 1) {
       const filteredKeys = Object.keys(currentRecipe);
       const filteredMeasurements = [];
-
       const filteredIngredients = [];
+
       filteredKeys.forEach((key) => {
         if (key.includes('strIngredient')
         && (currentRecipe[`${key}`] !== ''
@@ -136,27 +103,6 @@ function FoodDetail() {
       return <span>No video for YOU!</span>;
     }
   }
-
-  const toProgress = () => {
-    const currentStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (currentStorage !== null && Object.keys(currentStorage).includes('meals')) {
-      const newStorage = {
-        ...currentStorage,
-        meals: {
-          ...currentStorage.meals,
-          [id]: [],
-        },
-      };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
-    }
-    const newStorage = {
-      ...currentStorage,
-      meals: {
-        [id]: [],
-      },
-    };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
-  };
 
   const addFavorite = () => {
     const currentFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -211,6 +157,27 @@ function FoodDetail() {
         />
       </button>
     );
+  };
+
+  const toProgress = () => {
+    const currentStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (currentStorage !== null && Object.keys(currentStorage).includes('meals')) {
+      const newStorage = {
+        ...currentStorage,
+        meals: {
+          ...currentStorage.meals,
+          [id]: [],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+    }
+    const newStorage = {
+      ...currentStorage,
+      meals: {
+        [id]: [],
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
   };
 
   const handleBtnRender = () => {
