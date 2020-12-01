@@ -172,9 +172,12 @@ function FoodDetail() {
     if (currentFavorite !== null) {
       localStorage
         .setItem('favoriteRecipes', JSON.stringify([...currentFavorite, favoriteData]));
-
-      setIsFavorite(true);
+    } else {
+      localStorage
+        .setItem('favoriteRecipes', JSON.stringify([favoriteData]));
     }
+
+    setIsFavorite(true);
   };
 
   const removeFavorite = () => {
