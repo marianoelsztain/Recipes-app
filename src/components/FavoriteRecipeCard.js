@@ -71,14 +71,14 @@ function DoneRecipeCard({ recipe, index }) {
         </Link>
       </div>
       <div>
-        <button type="button" onClick={ shareClick }>
+        <button type="button" onClick={ () => shareClick() }>
           <img
             alt="share button"
             data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
           />
         </button>
-        <button type="button" onClick={ removeFavorite }>
+        <button type="button" onClick={ () => removeFavorite() }>
           <img
             alt="favorite button"
             data-testid={ `${index}-horizontal-favorite-btn` }

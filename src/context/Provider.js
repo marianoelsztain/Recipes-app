@@ -20,7 +20,7 @@ function Provider({ children }) {
   const [doneFilter, setDoneFilter] = useState('all');
   const [
     favoriteList,
-    setFavoriteList
+    setFavoriteList,
   ] = useState(JSON.parse(localStorage.getItem('favoriteRecipes')));
 
   const sliceStart = 0;

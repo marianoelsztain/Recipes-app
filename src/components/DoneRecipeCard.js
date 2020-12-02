@@ -73,7 +73,7 @@ function DoneRecipeCard({ recipe, index }) {
         )) }
       </div>
       <div>
-        <button type="button" onClick={ shareClick }>
+        <button type="button" onClick={ () => shareClick() }>
           <img
             alt="share button"
             data-testid={ `${index}-horizontal-share-btn` }
