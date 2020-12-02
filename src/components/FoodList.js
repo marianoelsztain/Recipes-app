@@ -34,7 +34,7 @@ function FoodList() {
     if (foodData.length > maxSize) {
       return foodData.slice(startIndex, maxSize).map((item, index) => (
         <FoodCard
-          index={ index }
+          testid={ index }
           key={ `recipe${index}` }
           recipe={ item }
           idMeal={ item.idMeal }
@@ -49,7 +49,7 @@ function FoodList() {
 
     return foodData.map((item, index) => (
       <FoodCard
-        index={ index }
+        testid={ index }
         key={ `recipe${index}` }
         recipe={ item }
         idMeal={ item.idMeal }

@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import RecipesContext from '../context/RecipesContext';
 import FoodRecomendationCard from './FoodRecomendationCard';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../css/Details.css';
 
 function DrinkDetail() {
@@ -13,11 +15,27 @@ function DrinkDetail() {
     foodData,
     getFoodAPI,
   } = useContext(RecipesContext);
+
   const currentRecipe = drinkData[0];
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
+  const [showMessage, setShowMessage] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const { id } = useParams();
+
+  useEffect(() => {
+    getDrinkAPI('id-filter', `${id}`);
+    getFoodAPI('name-filter', '');
+  }, []);
+
+  useEffect(() => {
+    const favorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorite !== null) {
+      const alreadyFavorite = favorite.some(({ id: recipeId }) => recipeId === id);
+      setIsFavorite(alreadyFavorite);
+    }
+  }, [isFavorite]);
 
   const handleRecomendations = () => {
     const maxSize = 6;
@@ -62,13 +80,131 @@ function DrinkDetail() {
   };
 
   useEffect(() => {
-    getDrinkAPI('id-filter', `${id}`);
-    getFoodAPI('name-filter', '');
-  }, []);
-
-  useEffect(() => {
     handleIngredients();
   }, [drinkData]);
+
+  const addFavorite = () => {
+    const currentFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoriteData = {
+      id: currentRecipe.idDrink,
+      type: 'bebida',
+      area: '',
+      category: currentRecipe.strCategory,
+      alcoholicOrNot: currentRecipe.strAlcoholic,
+      name: currentRecipe.strDrink,
+      image: currentRecipe.strDrinkThumb,
+    };
+    if (currentFavorite !== null) {
+      localStorage
+        .setItem('favoriteRecipes', JSON.stringify([...currentFavorite, favoriteData]));
+    } else {
+      localStorage
+        .setItem('favoriteRecipes', JSON.stringify([favoriteData]));
+    }
+
+    setIsFavorite(true);
+  };
+
+  const removeFavorite = () => {
+    const currentFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorite = currentFavorite.filter((item) => item.id !== id);
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorite));
+
+    setIsFavorite(false);
+  };
+
+  const handleFavoriteRender = () => {
+    if (isFavorite) {
+      return (
+        <button type="button" onClick={ () => removeFavorite() }>
+          <img
+            alt="Set this recipe as favorite"
+            data-testid="favorite-btn"
+            src={ blackHeartIcon }
+          />
+        </button>
+      );
+    }
+
+    return (
+      <button type="button" onClick={ () => addFavorite() }>
+        <img
+          alt="Set this recipe as favorite"
+          data-testid="favorite-btn"
+          src={ whiteHeartIcon }
+        />
+      </button>
+    );
+  };
+
+  const toProgress = () => {
+    const currentStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (currentStorage !== null && Object.keys(currentStorage).includes('cocktails')) {
+      const newStorage = {
+        ...currentStorage,
+        cocktails: {
+          ...currentStorage.cocktails,
+          [id]: [],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+    } else {
+      const newStorage = {
+        ...currentStorage,
+        cocktails: {
+          [id]: [],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+    }
+  };
+
+  const handleBtnRender = () => {
+    const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const done = JSON.parse(localStorage.getItem('doneRecipes'));
+    let isInProgress = false;
+    let isDone = false;
+
+    if (inProgress !== null && Object.keys(inProgress).includes('cocktails')) {
+      isInProgress = Object
+        .keys(inProgress.cocktails).some((recipeId) => recipeId === id);
+    }
+
+    if (done !== null) {
+      isDone = done.some(({ id: recipeId }) => recipeId === id);
+    }
+
+    if (!isDone) {
+      return (
+        <Link to={ `/bebidas/${id}/in-progress` }>
+          <button
+            type="button"
+            className="details-in-progress-btn"
+            onClick={ () => toProgress() }
+            data-testid="start-recipe-btn"
+          >
+            { isInProgress ? 'Continuar Receita' : 'Iniciar Receita' }
+          </button>
+        </Link>
+      );
+    }
+  };
+
+  const CopiedLinkMessage = (
+    <div className="copy-message-hidden">
+      <span>
+        Link copiado!
+      </span>
+    </div>
+  );
+
+  const shareClick = () => {
+    const timeToShow = 1500;
+    copy(`http://localhost:3000/bebidas/${id}`);
+    setShowMessage(true);
+    setTimeout(() => setShowMessage(false), timeToShow);
+  };
 
   const handleDetails = () => {
     if (drinkData.length === 1) {
@@ -81,7 +217,6 @@ function DrinkDetail() {
               src={ currentRecipe.strDrinkThumb }
               alt="Receita"
               data-testid="recipe-photo"
-              tagName="IMG"
             />
           </div>
           <div className="detail-title-btn-container">
@@ -98,16 +233,15 @@ function DrinkDetail() {
             </div>
 
             <div className="detail-btn-container">
-              <img
-                alt="share data"
-                data-testid="share-btn"
-                src={ shareIcon }
-              />
-              <img
-                alt="Set this recipe as favorite"
-                data-testid="favorite-btn"
-                src={ whiteHeartIcon }
-              />
+              <button type="button" onClick={ shareClick }>
+                <img
+                  alt="share data"
+                  data-testid="share-btn"
+                  src={ shareIcon }
+                />
+              </button>
+              { showMessage && CopiedLinkMessage }
+              { handleFavoriteRender() }
             </div>
           </div>
 
@@ -150,15 +284,9 @@ function DrinkDetail() {
             {handleRecomendations()}
           </div>
 
-          <Link to={ `/comidas/${id}/in-progress` }>
-            <button
-              className="details-in-progress-btn"
-              type="button"
-              data-testid="start-recipe-btn"
-            >
-              Iniciar Receita
-            </button>
-          </Link>
+          <div>
+            { handleBtnRender() }
+          </div>
 
         </div>
       );
@@ -167,7 +295,9 @@ function DrinkDetail() {
   };
 
   return (
-    <div>{ handleDetails() }</div>
+    <div>
+      { handleDetails() }
+    </div>
 
   );
 }

@@ -48,7 +48,7 @@ function DrinkList() {
 
     return drinkData.map((item, index) => (
       <DrinkCard
-        index={ index }
+        testid={ index }
         key={ `recipe${index}` }
         recipe={ item }
         idDrink={ item.idDrink }

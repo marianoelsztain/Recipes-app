@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import RecipesContext from '../context/RecipesContext';
 import DrinkRecomendationCard from './DrinkRecomendationCard';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import '../css/Details.css';
 
 function FoodDetail() {
@@ -16,9 +18,23 @@ function FoodDetail() {
   const currentRecipe = foodData[0];
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
-  const [recipeBtn, setRecipeBtn] = useState('Iniciar Receita');
+  const [showMessage, setShowMessage] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const { id } = useParams();
+
+  useEffect(() => {
+    getFoodAPI('id-filter', `${id}`);
+    getDrinkAPI('name-filter', '');
+  }, []);
+
+  useEffect(() => {
+    const favorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorite !== null) {
+      const alreadyFavorite = favorite.some(({ id: recipeId }) => recipeId === id);
+      setIsFavorite(alreadyFavorite);
+    }
+  }, [isFavorite]);
 
   const handleRecomendations = () => {
     const maxSize = 6;
@@ -33,7 +49,6 @@ function FoodDetail() {
           recipe={ item }
           idDrink={ item.idDrink }
         />
-
       ));
     }
   };
@@ -42,8 +57,8 @@ function FoodDetail() {
     if (foodData.length === 1) {
       const filteredKeys = Object.keys(currentRecipe);
       const filteredMeasurements = [];
-
       const filteredIngredients = [];
+
       filteredKeys.forEach((key) => {
         if (key.includes('strIngredient')
         && (currentRecipe[`${key}`] !== ''
@@ -62,6 +77,10 @@ function FoodDetail() {
       setMeasures(filteredMeasurements);
     }
   };
+
+  useEffect(() => {
+    handleIngredients();
+  }, [foodData]);
 
   function handleUrl(url) {
     if (foodData.length === 1) {
@@ -84,26 +103,128 @@ function FoodDetail() {
     }
   }
 
-  function HandleBtn(text) {
-    setRecipeBtn(text);
-  }
-
-  useEffect(() => {
-    getFoodAPI('id-filter', `${id}`);
-    getDrinkAPI('name-filter', '');
-    const data = localStorage.getItem('button-state');
-    if (data) {
-      setRecipeBtn(JSON.parse(data));
+  const addFavorite = () => {
+    const currentFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favoriteData = {
+      id: currentRecipe.idMeal,
+      type: 'comida',
+      area: currentRecipe.strArea,
+      category: currentRecipe.strCategory,
+      alcoholicOrNot: '',
+      name: currentRecipe.strMeal,
+      image: currentRecipe.strMealThumb,
+    };
+    if (currentFavorite !== null) {
+      localStorage
+        .setItem('favoriteRecipes', JSON.stringify([...currentFavorite, favoriteData]));
+    } else {
+      localStorage
+        .setItem('favoriteRecipes', JSON.stringify([favoriteData]));
     }
-  }, []);
 
-  useEffect(() => {
-    handleIngredients();
-  }, [foodData]);
+    setIsFavorite(true);
+  };
 
-  useEffect(() => {
-    localStorage.setItem('button-state', JSON.stringify(recipeBtn));
-  });
+  const removeFavorite = () => {
+    const currentFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const newFavorite = currentFavorite.filter((item) => item.id !== id);
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorite));
+
+    setIsFavorite(false);
+  };
+
+  const handleFavoriteRender = () => {
+    if (isFavorite) {
+      return (
+        <button type="button" onClick={ () => removeFavorite() }>
+          <img
+            alt="Set this recipe as favorite"
+            data-testid="favorite-btn"
+            src={ blackHeartIcon }
+          />
+        </button>
+      );
+    }
+
+    return (
+      <button type="button" onClick={ () => addFavorite() }>
+        <img
+          alt="Set this recipe as favorite"
+          data-testid="favorite-btn"
+          src={ whiteHeartIcon }
+        />
+      </button>
+    );
+  };
+
+  const toProgress = () => {
+    const currentStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (currentStorage !== null && Object.keys(currentStorage).includes('meals')) {
+      const newStorage = {
+        ...currentStorage,
+        meals: {
+          ...currentStorage.meals,
+          [id]: [],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+    } else {
+      const newStorage = {
+        ...currentStorage,
+        meals: {
+          [id]: [],
+        },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
+    }
+  };
+
+  const handleBtnRender = () => {
+    const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const done = JSON.parse(localStorage.getItem('doneRecipes'));
+    let isInProgress = false;
+    let isDone = false;
+
+    if (inProgress !== null && Object.keys(inProgress).includes('meals')) {
+      isInProgress = Object
+        .keys(inProgress.meals).some((recipeId) => recipeId === id);
+    }
+
+    if (done !== null) {
+      isDone = done.some(({ id: recipeId }) => recipeId === id);
+    }
+
+    if (!isDone) {
+      return (
+        <Link to={ `/comidas/${id}/in-progress` }>
+          <button
+            type="button"
+            className="details-in-progress-btn"
+            onClick={ () => toProgress() }
+            data-testid="start-recipe-btn"
+          >
+            { isInProgress ? 'Continuar Receita' : 'Iniciar Receita' }
+          </button>
+        </Link>
+      );
+    }
+  };
+
+  const CopiedLinkMessage = (
+    <div className="copy-message-hidden">
+      <span>
+        Link copiado!
+      </span>
+    </div>
+  );
+
+  const shareClick = () => {
+    const timeToShow = 1500;
+    copy(`http://localhost:3000/comidas/${id}`);
+    setShowMessage(true);
+    setTimeout(() => setShowMessage(false), timeToShow);
+  };
 
   const handleDetails = () => {
     if (foodData.length === 1) {
@@ -132,16 +253,15 @@ function FoodDetail() {
             </div>
 
             <div className="detail-btn-container">
-              <img
-                alt="share data"
-                data-testid="share-btn"
-                src={ shareIcon }
-              />
-              <img
-                alt="Set this recipe as favorite"
-                data-testid="favorite-btn"
-                src={ whiteHeartIcon }
-              />
+              <button type="button" onClick={ shareClick }>
+                <img
+                  alt="share data"
+                  data-testid="share-btn"
+                  src={ shareIcon }
+                />
+              </button>
+              { showMessage && CopiedLinkMessage }
+              { handleFavoriteRender() }
             </div>
           </div>
 
@@ -187,18 +307,9 @@ function FoodDetail() {
           <div className="detail-recomendation-container">
             {handleRecomendations()}
           </div>
-
-          <Link to={ `/comidas/${id}/in-progress` }>
-            <button
-              className="details-in-progress-btn"
-              type="button"
-              data-testid="start-recipe-btn"
-              onClick={ () => HandleBtn('Continuar Receita') }
-            >
-              {recipeBtn}
-            </button>
-          </Link>
-
+          <div>
+            { handleBtnRender() }
+          </div>
         </div>
       );
     }
@@ -206,7 +317,9 @@ function FoodDetail() {
   };
 
   return (
-    <div>{ handleDetails() }</div>
+    <div>
+      { handleDetails() }
+    </div>
 
   );
 }
