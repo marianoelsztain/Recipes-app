@@ -16,9 +16,6 @@ Nesse projeto você será capaz de:
 
 - [O que deverá ser desenvolvido](#o-que-deverá-ser-desenvolvido)
   - [Protótipo do projeto](#protótipo-do-projeto)
-- [Data de entrega](#data-de-entrega)
-- [Como desenvolver](#como-desenvolver)
-  - [Antes de começar a desenvolver](#antes-de-começar-a-desenvolver)
 - [Requisitos do projeto](#requisitos-do-projeto)
   - [Linter](#linter)
   - [Execução de testes de requisito](#execução-de-testes-de-requisito)
