@@ -14,7 +14,7 @@ Nesse projeto você será capaz de:
 
 ## SUMÁRIO
 
-- [O que deverá ser desenvolvido](#o-que-foi-desenvolvido)
+- [O que foi desenvolvido](#o-que-foi-desenvolvido)
   - [Protótipo do projeto](#protótipo-do-projeto)
 - [Requisitos do projeto](#requisitos-do-projeto)
   - [Linter](#linter)
